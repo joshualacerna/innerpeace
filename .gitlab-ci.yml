@@ -1,0 +1,55 @@
+before_script:
+    - export API_VERSION=2.8.42
+    - export MR_ID=1
+    - export COMPILED_IMAGE=asia.gcr.io/:${API_VERSION}
+    - export GITLAB_PROJECT_ID=576
+    - export PRIVATE_TOKEN=6U9q5MX5g7GbrdZQxxZo
+    - mix deps.get
+    - mix compile
+  
+  stages:
+   - test
+   - tag
+   - build
+
+  test credo:
+    stage: test
+    tags:
+      - test
+    except:
+      - uat/auth
+      - staging/auth
+      - prod/auth
+    script:
+      - mix credo
+  
+  # Start of CI
+  tag-api:
+    stage: tag
+    environment:
+      name: ist
+      url: https://s1-ist.medilink.com.ph/api
+    only:
+      - ist/auth
+    tags:
+      - release_notes
+    script:
+      - "commits=$(curl -X GET 'https://gitlab.medilink.com.ph/api/v4/projects/'\"${GITLAB_PROJECT_ID}\"'/merge_requests/'\"${MR_ID}\"'/commits' -H 'Private-Token: '\"${PRIVATE_TOKEN}\" | jq -r \"[.[] | .title] | @csv\")"
+      - "commits=${commits//,/\\<br/>}"
+      - "commits=${commits//\\\"/}"
+      - "data='{\"tag_name\": \"v'\"${API_VERSION}\"'\",\"ref\": \"ist/auth\",\"message\": \"Release '\"${API_VERSION}\"'\",\"release_description\": \"'\"$commits\"'\"}'"
+      - "curl -X POST 'https://gitlab.medilink.com.ph/api/v4/projects/'\"${GITLAB_PROJECT_ID}\"'/repository/tags' -H 'Private-Token: '\"${PRIVATE_TOKEN}\" -H 'Content-Type: application/json' -d \"$data\""
+  
+  build-web:
+    stage: build
+    environment:
+      name: master
+      url: https://s1-ist.medilink.com.ph/api
+    only:
+      - master
+    tags:
+      - builder
+    script:
+      - git branch -f master HEAD
+      - docker-compose build
+      - docker push ${COMPILED_IMAGE}
