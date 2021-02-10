@@ -1,0 +1,7 @@
+version: '3'
+services:
+  base:
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    image: asia.gcr.io/image-repository-235607/django:4.0
