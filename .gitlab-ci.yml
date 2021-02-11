@@ -34,6 +34,6 @@ before_script:
     tags:
       - builder
     script:
-      - git branch -f master HEAD
-      - docker-compose build
-      - docker push ${COMPILED_IMAGE}
+      - sudo git branch -f master HEAD
+      - sudo docker-compose build
+      - sudo docker push ${COMPILED_IMAGE}
