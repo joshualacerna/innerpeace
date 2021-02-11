@@ -5,35 +5,19 @@ before_script:
     - export GITLAB_PROJECT_ID=24324549
     - export PRIVATE_TOKEN=jfsEHn6vC7CzVn_CNizR
   
-  stages:
-   - build
-  # # Start of CI
-  # tag-api:
-  #   stage: tag
-  #   environment:
-  #     name: ist
-  #     url: https://s1-ist.medilink.com.ph/api
-  #   only:
-  #     - ist/auth
-  #   tags:
-  #     - release_notes
-  #   script:
-  #     - "commits=$(curl -X GET 'https://gitlab.medilink.com.ph/api/v4/projects/'\"${GITLAB_PROJECT_ID}\"'/merge_requests/'\"${MR_ID}\"'/commits' -H 'Private-Token: '\"${PRIVATE_TOKEN}\" | jq -r \"[.[] | .title] | @csv\")"
-  #     - "commits=${commits//,/\\<br/>}"
-  #     - "commits=${commits//\\\"/}"
-  #     - "data='{\"tag_name\": \"v'\"${VERSION}\"'\",\"ref\": \"ist/auth\",\"message\": \"Release '\"${VERSION}\"'\",\"release_description\": \"'\"$commits\"'\"}'"
-  #     - "curl -X POST 'https://gitlab.medilink.com.ph/api/v4/projects/'\"${GITLAB_PROJECT_ID}\"'/repository/tags' -H 'Private-Token: '\"${PRIVATE_TOKEN}\" -H 'Content-Type: application/json' -d \"$data\""
-  
-  build-web:
-    stage: build
-    environment:
-      name: master
-      url: https://ziro/api
-    only:
-      - master
-    tags:
-      - builder
-    script:
-      - sudo git branch -f master HEAD
-      - sudo docker-compose build
-      - sudo docker push ${COMPILED_IMAGE}
+stages:
+  - build
+
+build-web:
+  stage: build
+  environment:
+    name: master
+    url: https://ziro/api
+  only:
+    - master
+  tags:
+    - builder
+  script:
+    - sudo git branch -f master HEAD
+    - sudo docker-compose build
+    - sudo docker push ${COMPILED_IMAGE}
