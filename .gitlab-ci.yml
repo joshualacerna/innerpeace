@@ -20,4 +20,4 @@ build-web:
   script:
     - git branch -f master HEAD
     - docker-compose build
-    - docker push ${COMPILED_IMAGE}
+    - sudo docker push ${COMPILED_IMAGE}
