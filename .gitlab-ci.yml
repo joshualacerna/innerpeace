@@ -1,5 +1,5 @@
 before_script:
-    - export VERSION=3.0.0
+    - export VERSION=4.0.0
     - export MR_ID=1
     - export COMPILED_IMAGE=gcr.io/nib-backend-nonprod/python:${VERSION}
     - export GITLAB_PROJECT_ID=24324549
@@ -20,4 +20,4 @@ build-web:
   script:
     - git branch -f master HEAD
     - docker-compose build
-    - docker push ${COMPILED_IMAGE}
+    - sudo docker push ${COMPILED_IMAGE}
