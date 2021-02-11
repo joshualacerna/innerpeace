@@ -47,7 +47,7 @@ spec:
       serviceAccountName: info-webpage
       containers:
       - name: webpage
-        image: gcr.io/nib-backend-nonprod/python:6.0.0
+        image: gcr.io/nib-backend-nonprod/python:7.0.0
         imagePullPolicy: IfNotPresent
         args: ["python", "manage.py", "runserver", "0.0.0.0:8000"]
         ports:
