@@ -64,10 +64,6 @@ on:
       #   run: docker-compose build
       
       - name: Build & Publish Image
-        env:
-          VERSION: 10.0.0
-          COMPILED_IMAGE: gcr.io/nib-backend-nonprod/python:$VERSION
-
         run: docker-compose build
 
 
