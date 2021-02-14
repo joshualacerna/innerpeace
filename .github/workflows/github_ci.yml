@@ -7,7 +7,7 @@ on:
       - master
 
 jobs:
-  test:
+  Test:
     runs-on: self-hosted
     if: ${{ github.event_name == 'push' }} 
     steps:
@@ -17,7 +17,7 @@ jobs:
       - name: conect to cluster
         run: echo "test"
 
-  build: # package job for building and publishing docker images
+  Build: # package job for building and publishing docker images
     needs: test
     runs-on: self-hosted
     env:
@@ -35,7 +35,18 @@ jobs:
       - name: Push Image
         run: sudo docker push $COMPILED_IMAGE:$VERSION
 
-  deploy:
+  Deploy:
+    needs: [test, build]
+    runs-on: self-hosted
+    if: ${{ github.event_name == 'push' }} 
+    steps:
+      - name: Checkout Code 
+        uses: actions/checkout@v2
+      
+      - name: conect to cluster
+        run: echo "kubectl apply test"
+
+  Auto-message:
     needs: [test, build]
     runs-on: self-hosted
     if: ${{ github.event_name == 'push' }} 
