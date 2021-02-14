@@ -24,15 +24,15 @@ jobs:
       - name: Push Image
         run: sudo docker push $COMPILED_IMAGE:$VERSION
 
-  deploy:
-    runs-on: self-hosted
-    if: ${{ github.event_name == 'push' }} 
-    steps:
-      - name: Checkout Code 
-        uses: actions/checkout@v2
+  # deploy:
+  #   runs-on: self-hosted
+  #   if: ${{ github.event_name == 'push' }} 
+  #   steps:
+  #     - name: Checkout Code 
+  #       uses: actions/checkout@v2
       
-      - name: conect to cluster
-        run: echo "kubectl apply"
+  #     - name: conect to cluster
+  #       run: echo "kubectl apply"
 
 
         
