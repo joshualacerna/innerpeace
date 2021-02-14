@@ -18,7 +18,7 @@ jobs:
         run: echo "test"
 
   Build: # package job for building and publishing docker images
-    needs: test
+    needs: Test
     runs-on: self-hosted
     env:
       VERSION: 10.0.0
@@ -36,7 +36,7 @@ jobs:
         run: sudo docker push $COMPILED_IMAGE:$VERSION
 
   Deploy:
-    needs: [test, build]
+    needs: [Test, Build]
     runs-on: self-hosted
     if: ${{ github.event_name == 'push' }} 
     steps:
@@ -47,7 +47,7 @@ jobs:
         run: echo "kubectl apply test"
 
   Auto-message:
-    needs: [test, build]
+    needs: [Test, Build, Deploy]
     runs-on: self-hosted
     if: ${{ github.event_name == 'push' }} 
     steps:
