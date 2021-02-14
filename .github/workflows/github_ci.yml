@@ -7,7 +7,7 @@ on:
       - master
 
 jobs:
-  build and push: # package job for building and publishing docker images
+  build: # package job for building and publishing docker images
     runs-on: self-hosted
     env:
       VERSION: 10.0.0
@@ -24,15 +24,15 @@ jobs:
       - name: Push Image
         run: sudo docker push $COMPILED_IMAGE:$VERSION
 
-  # deploy:
-  #   runs-on: self-hosted
-  #   if: ${{ github.event_name == 'push' }} 
-  #   steps:
-  #     - name: Checkout Code 
-  #       uses: actions/checkout@v2
+  deploy:
+    runs-on: self-hosted
+    if: ${{ github.event_name == 'push' }} 
+    steps:
+      - name: Checkout Code 
+        uses: actions/checkout@v2
       
-  #     - name: conect to cluster
-  #       run: echo "kubectl apply"
+      - name: conect to cluster
+        run: echo "kubectl apply"
 
 
         
