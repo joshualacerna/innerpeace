@@ -67,10 +67,13 @@ on:
         env:
           VERSION: 10.0.0
           COMPILED_IMAGE: gcr.io/nib-backend-nonprod/python:$VERSION
-          
+
         run: |
         docker-compose build
-        sudo docker push $COMPILED_IMAGE
+
+
+
+
         
 
         
