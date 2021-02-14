@@ -5,7 +5,7 @@ on:
   push:
     branches:
       - master
-
+jobs:
 
   package-job: # package job for building and publishing docker images
     runs-on: self-hosted
