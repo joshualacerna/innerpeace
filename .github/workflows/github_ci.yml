@@ -19,9 +19,8 @@ jobs:
 
       - name: Push Image
         env:
-          VERSION: 10.0.0
-          COMPILED_IMAGE: gcr.io/nib-backend-nonprod/python:$VERSION
-        run: sudo docker push gcr.io/nib-backend-nonprod/python:10.0.0
+          COMPILED_IMAGE: gcr.io/nib-backend-nonprod/python:10.0.0
+        run: sudo docker push $COMPILED_IMAGE
 
 
         
