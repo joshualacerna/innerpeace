@@ -18,6 +18,7 @@ jobs:
         run: echo "test"
 
   build: # package job for building and publishing docker images
+    needs: test
     runs-on: self-hosted
     env:
       VERSION: 10.0.0
@@ -35,6 +36,7 @@ jobs:
         run: sudo docker push $COMPILED_IMAGE:$VERSION
 
   deploy:
+    needs: [test, build]
     runs-on: self-hosted
     if: ${{ github.event_name == 'push' }} 
     steps:
