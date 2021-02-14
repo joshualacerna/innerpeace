@@ -10,7 +10,7 @@ jobs:
   package-job: # package job for building and publishing docker images
     runs-on: self-hosted
     env:
-      VERSION: 10.0.0
+      VERSION: "10.0.0"
       COMPILED_IMAGE: gcr.io/nib-backend-nonprod/python:$VERSION
 
     if: ${{ github.event_name == 'push' }} # will be fired if the trigger event is a push event.
