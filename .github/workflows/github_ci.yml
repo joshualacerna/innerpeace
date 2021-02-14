@@ -7,6 +7,16 @@ on:
       - master
 
 jobs:
+  test:
+    runs-on: self-hosted
+    if: ${{ github.event_name == 'push' }} 
+    steps:
+      - name: Checkout Code 
+        uses: actions/checkout@v2
+      
+      - name: conect to cluster
+        run: echo "test"
+
   build: # package job for building and publishing docker images
     runs-on: self-hosted
     env:
