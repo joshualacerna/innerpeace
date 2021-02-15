@@ -4,4 +4,4 @@ services:
     build:
       context: .
       dockerfile: ./Dockerfile
-    image: gcr.io/nib-backend-nonprod/python:1.0.0
+    image: gcr.io/nib-backend-nonprod/python:2.0.0

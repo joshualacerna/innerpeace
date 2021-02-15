@@ -21,7 +21,7 @@ jobs:
     needs: Test
     runs-on: self-hosted
     env:
-      VERSION: 1.0.0
+      VERSION: 2.0.0
       COMPILED_IMAGE: gcr.io/nib-backend-nonprod/python
 
     if: ${{ github.event_name == 'push' }} # will be fired if the trigger event is a push event.
